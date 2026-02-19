@@ -139,7 +139,13 @@ export function useFFmpeg() {
             await loadFFmpeg();
             const ffmpeg = ffmpegInstance!;
 
-            const inputName = `input_${Date.now()}.${file.name.split(".").pop()}`;
+            // Build deterministic filenames for FFmpeg's virtual FS.
+            // iOS Safari may report uppercase extensions (.JPEG, .PNG) or
+            // mismatched MIME/extension combos — normalize to lowercase
+            // and use the registered extension when possible.
+            const rawExt = file.name.split(".").pop()?.toLowerCase() || "bin";
+            const inputExt = outputFormat ? rawExt : (getInputFormatByExtension(file.name)?.extensions[0] ?? rawExt);
+            const inputName = `input_${Date.now()}.${inputExt}`;
             const outputName = `output_${Date.now()}.${outputFormat.extension}`;
 
             try {
@@ -182,7 +188,10 @@ export function useFFmpeg() {
                         ffmpegInstance = null;
                         loadPromise = null;
                         setLoaded(false);
-                        throw execError;
+                        const msg = String(execError).includes("Aborted")
+                            ? "Conversion failed — this file may be too large for your browser's memory. Try a smaller file or use a desktop browser."
+                            : `Conversion failed: ${execError instanceof Error ? execError.message : String(execError)}`;
+                        throw new Error(msg);
                     }
                     throw new Error("Failed to read converted file");
                 }

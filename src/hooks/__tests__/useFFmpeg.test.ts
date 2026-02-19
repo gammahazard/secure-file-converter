@@ -293,7 +293,7 @@ describe("Error recovery — exec() Aborted", () => {
         }
 
         expect(thrownError).toBeDefined();
-        expect(thrownError!.message).toContain("Aborted()");
+        expect(thrownError!.message).toContain("too large for your browser");
     });
 
     it("throws when exec succeeds but output is empty", async () => {
@@ -326,7 +326,7 @@ describe("Error recovery — exec() Aborted", () => {
         }
 
         expect(thrownError).toBeDefined();
-        expect(thrownError!.message).toBe("Aborted()");
+        expect(thrownError!.message).toContain("too large for your browser");
     });
 });
 
