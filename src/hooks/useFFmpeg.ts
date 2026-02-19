@@ -134,18 +134,67 @@ export function useFFmpeg() {
                 setError(msg);
                 throw new Error(msg);
             }
+            // ── Canvas API fast path for image→image conversions ────
+            // For PNG, JPG, WebP outputs the browser's native image decoder
+            // is faster, uses far less memory, and works on iOS where
+            // FFmpeg.wasm's WASM memory is severely constrained (~256 MB).
+            // We only fall through to FFmpeg for exotic formats (TIFF, BMP, ICO, TGA).
+            const canvasOutputMimes: Record<string, string> = {
+                png: "image/png",
+                jpg: "image/jpeg",
+                jpeg: "image/jpeg",
+                webp: "image/webp",
+            };
 
+            const canvasOutMime = canvasOutputMimes[outputExtension];
+            const isImageInput = file.type.startsWith("image/");
+
+            if (canvasOutMime && isImageInput) {
+                if (isDev) console.log(`[Canvas] Using native Canvas API for ${file.type} → ${outputExtension}`);
+                try {
+                    const bitmap = await createImageBitmap(file);
+                    const canvas = document.createElement("canvas");
+                    canvas.width = bitmap.width;
+                    canvas.height = bitmap.height;
+                    const ctx = canvas.getContext("2d")!;
+
+                    // For JPEG: fill white background first (strips alpha)
+                    if (outputExtension === "jpg" || outputExtension === "jpeg") {
+                        ctx.fillStyle = "#ffffff";
+                        ctx.fillRect(0, 0, canvas.width, canvas.height);
+                    }
+
+                    ctx.drawImage(bitmap, 0, 0);
+                    bitmap.close();
+
+                    // Quality: 0.92 for JPEG (matches FFmpeg q:v 2), 0.90 for WebP
+                    const quality = outputExtension === "webp" ? 0.90 : 0.92;
+                    const blob = await new Promise<Blob>((resolve, reject) => {
+                        canvas.toBlob(
+                            (b) => b ? resolve(b) : reject(new Error("Canvas export failed")),
+                            canvasOutMime,
+                            canvasOutMime === "image/png" ? undefined : quality,
+                        );
+                    });
+
+                    const url = URL.createObjectURL(blob);
+                    const baseName = file.name.replace(/\.[^.]+$/, "");
+                    const fileName = `${baseName}.${outputExtension}`;
+
+                    setProgress(100);
+                    return { blob, url, fileName, originalSize: file.size, convertedSize: blob.size };
+                } catch (canvasErr) {
+                    if (isDev) console.warn("[Canvas] Native conversion failed, falling back to FFmpeg:", canvasErr);
+                    // Fall through to FFmpeg path below
+                }
+            }
+
+            // ── FFmpeg WASM path (audio, video, exotic image formats) ──
             // Ensure WASM is loaded
             await loadFFmpeg();
             const ffmpeg = ffmpegInstance!;
 
-            // Build deterministic filenames for FFmpeg's virtual FS.
-            // iOS Safari may report uppercase extensions (.JPEG, .PNG) or
-            // mismatched MIME/extension combos — normalize to lowercase
-            // and use the registered extension when possible.
-            const rawExt = file.name.split(".").pop()?.toLowerCase() || "bin";
-            const inputExt = outputFormat ? rawExt : (getInputFormatByExtension(file.name)?.extensions[0] ?? rawExt);
-            const inputName = `input_${Date.now()}.${inputExt}`;
+            const inputName = `input_${Date.now()}.${file.name.split(".").pop()}`;
             const outputName = `output_${Date.now()}.${outputFormat.extension}`;
 
             try {
