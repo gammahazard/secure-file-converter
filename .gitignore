@@ -46,3 +46,7 @@ public/ffmpeg/
 # IDE
 .vscode/
 .idea/
+
+# Agent/AI tools
+.agent/
+.gemini/
