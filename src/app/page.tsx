@@ -23,6 +23,7 @@ import { ProgressBar } from "@/components/progress-bar";
 import { ResultCard } from "@/components/result-card";
 import { BatchResultCard } from "@/components/batch-result-card";
 import { InfoModal } from "@/components/info-modal";
+import { RoadmapModal } from "@/components/roadmap-modal";
 import { useFFmpeg, type ConversionResult } from "@/hooks/useFFmpeg";
 import {
   getInputFormat, getInputFormatByExtension,
@@ -285,7 +286,6 @@ export default function Home() {
             <h1 className="text-3xl font-bold tracking-tight text-white sm:text-4xl">
               ConvertLocal
             </h1>
-            <InfoModal />
           </div>
           <p className="mb-4 max-w-md text-base text-white/60">
             Convert images, audio &amp; video — right in your browser.
@@ -306,6 +306,10 @@ export default function Home() {
               All conversion happens via WebAssembly in your browser. Zero network requests.
             </TooltipContent>
           </Tooltip>
+          <div className="mt-3 flex items-center justify-center gap-2">
+            <InfoModal />
+            <RoadmapModal />
+          </div>
         </header>
 
         {/* Main Converter Card */}

@@ -116,6 +116,7 @@ src/
 │   ├── result-card.tsx         # Single-file result (preview + download)
 │   ├── batch-result-card.tsx   # Multi-file results (individual + zip download)
 │   ├── info-modal.tsx          # Privacy & supported formats modal
+│   ├── roadmap-modal.tsx       # Upcoming features modal
 │   └── ui/                     # Shadcn UI primitives (button, card, dialog, etc.)
 ├── converters/
 │   ├── types.ts                # Shared types (FormatInfo, InputFormat, QueueItem)

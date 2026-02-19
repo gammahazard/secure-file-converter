@@ -13,7 +13,7 @@ import {
     DialogTrigger,
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
-import { ShieldIcon, InfoIcon } from "@/components/icons";
+import { ShieldIcon } from "@/components/icons";
 
 export function InfoModal() {
     return (
@@ -22,10 +22,10 @@ export function InfoModal() {
                 <Button
                     id="btn-info"
                     variant="ghost"
-                    size="icon"
-                    className="h-9 w-9 rounded-full border border-white/10 bg-white/5 text-white/50 hover:text-white hover:bg-white/10 transition-colors"
+                    size="sm"
+                    className="h-8 rounded-full border border-white/10 bg-white/5 px-4 text-sm text-white/50 hover:text-white hover:bg-white/10 transition-colors"
                 >
-                    <InfoIcon className="h-4 w-4" />
+                    Info
                 </Button>
             </DialogTrigger>
 
