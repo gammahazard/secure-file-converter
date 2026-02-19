@@ -176,29 +176,31 @@ export function BatchResultCard({ items, onDownloadSingle, onReset }: BatchResul
                 </div>
 
                 {/* Actions */}
-                <div className="flex gap-3">
+                <div className="flex flex-col gap-2 sm:flex-row sm:gap-3">
                     {doneItems.length > 0 && (
                         <Button
                             id="btn-download-all"
                             onClick={handleDownloadAll}
                             disabled={zipping}
-                            className="flex-1 h-11 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-500
+                            className="h-11 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-500
                 font-semibold text-white shadow-lg shadow-emerald-600/25
-                hover:shadow-emerald-600/40 hover:brightness-110"
+                hover:shadow-emerald-600/40 hover:brightness-110 sm:flex-1 min-w-0"
                         >
-                            <DownloadIcon className="mr-2 h-4 w-4" />
-                            {zipping
-                                ? "Creating zip…"
-                                : doneItems.length === 1
-                                    ? `Download ${doneItems[0].result!.fileName}`
-                                    : `Download All (${doneItems.length} files)`
-                            }
+                            <DownloadIcon className="mr-2 h-4 w-4 flex-shrink-0" />
+                            <span className="truncate">
+                                {zipping
+                                    ? "Creating zip…"
+                                    : doneItems.length === 1
+                                        ? `Download ${doneItems[0].result!.fileName}`
+                                        : `Download All (${doneItems.length} files)`
+                                }
+                            </span>
                         </Button>
                     )}
                     <Button
                         id="btn-new-conversion"
                         variant="outline"
-                        className="h-11 rounded-xl border-white/10 text-white/70 hover:bg-white/5"
+                        className="h-11 rounded-xl border-white/10 text-white/70 hover:bg-white/5 flex-shrink-0"
                         onClick={onReset}
                     >
                         New
