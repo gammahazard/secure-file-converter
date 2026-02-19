@@ -16,12 +16,9 @@ const PNG: FormatInfo = {
     ffmpegFlags: ["-frames:v", "1", "-update", "1"], category: "image",
 };
 
-// -vf format=yuv420p: strip alpha channel via filter before JPEG encoding.
-// Using a filter instead of -pix_fmt avoids a crash in FFmpeg.wasm 0.12
-// where the direct flag causes "out of bounds memory access" on iOS Safari.
 const JPG: FormatInfo = {
     label: "JPG", extension: "jpg", mime: "image/jpeg",
-    ffmpegFlags: ["-frames:v", "1", "-update", "1", "-vf", "format=yuv420p", "-q:v", "2"], category: "image",
+    ffmpegFlags: ["-frames:v", "1", "-update", "1", "-q:v", "2"], category: "image",
 };
 
 const WEBP: FormatInfo = {
