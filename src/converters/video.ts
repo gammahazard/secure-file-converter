@@ -38,7 +38,7 @@ const AVI: FormatInfo = {
     // Capped at 1920px wide to keep output small enough for WASM
     // memory. -flush_packets 1 (in useFFmpeg) prevents corruption.
     ffmpegFlags: ["-vf", "scale=1920:-2:force_original_aspect_ratio=decrease,crop=trunc(iw/2)*2:trunc(ih/2)*2",
-        "-codec:v", "mpeg4", "-q:v", "3",
+        "-codec:v", "mpeg4", "-vtag", "DIVX", "-q:v", "3",
         "-codec:a", "libmp3lame", "-q:a", "2"], category: "video",
 };
 

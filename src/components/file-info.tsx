@@ -7,7 +7,7 @@
 
 import { Button } from "@/components/ui/button";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
-import { XIcon, ImageIcon, MusicIcon, VideoIcon } from "@/components/icons";
+import { XIcon, CategoryIcon } from "@/components/icons";
 import { formatBytes } from "@/lib/utils";
 import type { FormatCategory } from "@/converters";
 
@@ -20,13 +20,7 @@ interface FileInfoProps {
     onRemove: () => void;
 }
 
-function CategoryIcon({ category, className }: { category: FormatCategory; className?: string }) {
-    switch (category) {
-        case "audio": return <MusicIcon className={className} />;
-        case "video": return <VideoIcon className={className} />;
-        default: return <ImageIcon className={className} />;
-    }
-}
+
 
 export function FileInfo({ file, preview, formatLabel, category, canRemove, onRemove }: FileInfoProps) {
     return (

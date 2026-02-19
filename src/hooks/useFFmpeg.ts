@@ -282,9 +282,12 @@ export function useFFmpeg() {
                     setProgress(overall);
                 };
 
-                // Temporarily attach the per-item progress handler
-                if (ffmpegInstance) {
-                    ffmpegInstance.on("progress", progressHandler);
+                // Capture current instance ref — convertFile may reset the
+                // singleton on Aborted(), so we need a stable ref for off().
+                const instanceForCleanup = ffmpegInstance;
+
+                if (instanceForCleanup) {
+                    instanceForCleanup.on("progress", progressHandler);
                 }
 
                 try {
@@ -294,8 +297,8 @@ export function useFFmpeg() {
                     const message = err instanceof Error ? err.message : "Conversion failed";
                     onItemError(i, message);
                 } finally {
-                    if (ffmpegInstance) {
-                        ffmpegInstance.off("progress", progressHandler);
+                    if (instanceForCleanup) {
+                        instanceForCleanup.off("progress", progressHandler);
                     }
                 }
             }

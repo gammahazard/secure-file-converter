@@ -1,7 +1,10 @@
 // ─────────────────────────────────────────────────────────────
 // Inline SVG icons — no external icon library dependency.
 // Each component accepts an optional className prop for sizing.
+// CategoryIcon maps a FormatCategory to the correct icon.
 // ─────────────────────────────────────────────────────────────
+
+import type { FormatCategory } from "@/converters/types";
 
 interface IconProps {
     className?: string;
@@ -116,4 +119,13 @@ export function InfoIcon({ className }: IconProps) {
             <line x1="12" y1="8" x2="12.01" y2="8" />
         </svg>
     );
+}
+
+/** Maps a FormatCategory to its corresponding icon. */
+export function CategoryIcon({ category, className }: { category: FormatCategory; className?: string }) {
+    switch (category) {
+        case "audio": return <MusicIcon className={className} />;
+        case "video": return <VideoIcon className={className} />;
+        default: return <ImageIcon className={className} />;
+    }
 }

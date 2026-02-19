@@ -80,7 +80,7 @@ export function InfoModal() {
                             <FormatRow
                                 emoji="🖼️"
                                 label="Images"
-                                formats="PNG, JPG, WebP, BMP, TIFF, ICO"
+                                formats="PNG, JPG, WebP, BMP, TIFF, ICO, TGA"
                             />
                             <FormatRow
                                 emoji="🎵"

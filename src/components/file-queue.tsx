@@ -14,7 +14,7 @@ import { Progress } from "@/components/ui/progress";
 import {
     Select, SelectContent, SelectItem, SelectTrigger, SelectValue,
 } from "@/components/ui/select";
-import { XIcon, ImageIcon, MusicIcon, VideoIcon, CheckIcon } from "@/components/icons";
+import { XIcon, ImageIcon, MusicIcon, VideoIcon, CheckIcon, CategoryIcon } from "@/components/icons";
 import { formatBytes } from "@/lib/utils";
 import type { QueueItem, FormatCategory } from "@/converters";
 
@@ -31,13 +31,7 @@ function groupByCategory(items: QueueItem[]): Map<FormatCategory, QueueItem[]> {
     return groups;
 }
 
-function CategoryIcon({ category, className }: { category: FormatCategory; className?: string }) {
-    switch (category) {
-        case "audio": return <MusicIcon className={className} />;
-        case "video": return <VideoIcon className={className} />;
-        default: return <ImageIcon className={className} />;
-    }
-}
+
 
 const categoryLabels: Record<FormatCategory, string> = {
     image: "Images",
