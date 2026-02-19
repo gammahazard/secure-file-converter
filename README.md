@@ -17,7 +17,7 @@
 
 ## ✨ Features
 
-- 🖼️ **Image conversion** — PNG, JPG, WebP, BMP, TIFF, ICO, TGA
+- 🖼️ **Image conversion** — PNG, JPG, WebP, BMP, TIFF, ICO, TGA, HEIC (input)
 - 🎵 **Audio conversion** — MP3, WAV, OGG, AAC, FLAC, M4A
 - 🎬 **Video conversion** — MP4, WebM, MOV, AVI, MKV, GIF
 - 📁 **Batch conversion** — up to 10 files at once, each with its own output format
@@ -44,6 +44,7 @@
 | TIFF | PNG, JPG, WebP, BMP, TGA |
 | TGA | PNG, JPG, WebP, BMP, TIFF |
 | ICO | PNG, JPG, WebP, BMP, TIFF, TGA |
+| HEIC | PNG, JPG, WebP, BMP, TIFF, TGA |
 
 ### 🎵 Audio
 

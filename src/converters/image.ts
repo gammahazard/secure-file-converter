@@ -3,7 +3,7 @@
 //
 // Importing this module registers all image formats with the
 // central converter registry. Supports: PNG, JPG, WebP, BMP,
-// TIFF, ICO, TGA.
+// TIFF, ICO, TGA, HEIC/HEIF (input only).
 // ─────────────────────────────────────────────────────────────
 
 import type { FormatInfo } from "./types";
@@ -16,9 +16,12 @@ const PNG: FormatInfo = {
     ffmpegFlags: ["-frames:v", "1", "-update", "1"], category: "image",
 };
 
+// -pix_fmt yuvj420p: force pixel format to safely strip alpha channels
+// from sources like PNG/WebP/HEIC that support transparency.
+// Without this, JPEG encoding can fail on memory-constrained devices (iOS).
 const JPG: FormatInfo = {
     label: "JPG", extension: "jpg", mime: "image/jpeg",
-    ffmpegFlags: ["-frames:v", "1", "-update", "1", "-q:v", "2"], category: "image",
+    ffmpegFlags: ["-frames:v", "1", "-update", "1", "-pix_fmt", "yuvj420p", "-q:v", "2"], category: "image",
 };
 
 const WEBP: FormatInfo = {
@@ -80,5 +83,20 @@ registerFormat("image/x-tga", {
 
 registerFormat("image/x-icon", {
     label: "ICO", mime: "image/x-icon", extensions: ["ico"],
+    category: "image", outputs: [PNG, JPG, WEBP, BMP, TIFF, TGA],
+});
+
+// ── HEIC / HEIF (input only — iPhone's default photo format) ─
+// iOS Safari may report these as image/heic, image/heif, or
+// sometimes even image/jpeg with a .heic extension. We register
+// both MIME variants and rely on extension fallback in page.tsx.
+
+registerFormat("image/heic", {
+    label: "HEIC", mime: "image/heic", extensions: ["heic"],
+    category: "image", outputs: [PNG, JPG, WEBP, BMP, TIFF, TGA],
+});
+
+registerFormat("image/heif", {
+    label: "HEIF", mime: "image/heif", extensions: ["heif"],
     category: "image", outputs: [PNG, JPG, WEBP, BMP, TIFF, TGA],
 });
