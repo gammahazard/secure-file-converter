@@ -106,7 +106,7 @@ src/
 │   ├── globals.css             # Theme, gradients, glassmorphism, animations
 │   └── page.tsx                # Slim orchestrator — queue state + composition
 ├── components/
-│   ├── icons.tsx               # All inline SVG icons (no external deps)
+│   ├── icons.tsx               # App-specific inline SVG icons
 │   ├── drop-zone.tsx           # Multi-file drag-and-drop (up to 10 files)
 │   ├── file-queue.tsx          # Grouped file list with per-file format selectors
 │   ├── file-info.tsx           # Single file thumbnail + metadata
@@ -177,6 +177,15 @@ vercel --prod
 
 The `vercel.json` is already configured with the required COOP/COEP headers
 and security headers for production. No additional configuration needed.
+
+## 🗺️ Roadmap
+
+Planned features — contributions welcome!
+
+- [ ] **Document conversions** — PDF ↔ Image, Markdown → PDF (via `pdf.js` / `docx-preview`)
+- [ ] **Image editing** — Crop, resize, and rotate before converting (Canvas API or FFmpeg filters)
+- [ ] **Video trimming** — Trim start/end with a range slider before converting (FFmpeg `-ss`/`-t`)
+- [ ] **Hardware-adaptive limits** — Detect CPU cores, RAM, and GPU via browser APIs (`navigator.hardwareConcurrency`, `navigator.deviceMemory`, WebGL) and raise file-size limits for powerful devices
 
 ## 📄 License
 
