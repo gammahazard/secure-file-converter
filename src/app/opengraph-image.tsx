@@ -1,7 +1,7 @@
 import { ImageResponse } from "next/og";
 
 export const runtime = "edge";
-export const alt = "Secure File Converter — 100% Local File Conversion";
+export const alt = "ConvertLocal — 100% Local File Conversion";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
@@ -58,7 +58,7 @@ export default function OgImage() {
                         marginBottom: 16,
                     }}
                 >
-                    Secure File Converter
+                    ConvertLocal
                 </div>
 
                 {/* Subtitle */}

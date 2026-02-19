@@ -10,7 +10,7 @@ const inter = Inter({
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://secure-file-converter.vercel.app"),
-  title: "Secure File Converter — 100% Local File Conversion",
+  title: "ConvertLocal — 100% Local File Conversion",
   description:
     "Convert images, audio, and video between PNG, JPG, WebP, MP3, WAV, MP4, WebM, and more — instantly in your browser. No uploads, no servers — your files never leave your device.",
   keywords: [
@@ -32,9 +32,9 @@ export const metadata: Metadata = {
   robots: "index, follow",
   openGraph: {
     type: "website",
-    title: "Secure File Converter",
+    title: "ConvertLocal",
     description: "Convert images, audio & video — 100% in your browser. No uploads, no servers.",
-    siteName: "Secure File Converter",
+    siteName: "ConvertLocal",
   },
   other: {
     "theme-color": "#0f0f14",

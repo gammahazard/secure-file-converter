@@ -1,4 +1,4 @@
-# Secure File Converter
+# ConvertLocal
 
 > **Convert images, audio, and video — 100% in your browser.**
 > No uploads. No servers. Your files never leave your device.

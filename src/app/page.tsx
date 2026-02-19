@@ -283,7 +283,7 @@ export default function Home() {
               <ImageIcon className="h-6 w-6 text-white" />
             </div>
             <h1 className="text-3xl font-bold tracking-tight text-white sm:text-4xl">
-              Secure File Converter
+              ConvertLocal
             </h1>
             <InfoModal />
           </div>

@@ -33,7 +33,7 @@ export function InfoModal() {
                 <DialogHeader>
                     <DialogTitle className="flex items-center gap-2 text-lg text-white">
                         <ShieldIcon className="h-5 w-5 text-emerald-400" />
-                        How Secure File Converter Works
+                        How ConvertLocal Works
                     </DialogTitle>
                 </DialogHeader>
 
